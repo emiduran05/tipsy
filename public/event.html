@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipsy</title>
+    <link rel="stylesheet" media="all" href="css/style.css">
+</head>
+<body>
+     <header>
+        <h1>Tipsy</h1>
+    </header>
+
+    <body>
+        <section class="event-display">
+            <img src="css/img/event-image-png" alt="Picture of a party">
+            <h1>Andre's Birthday</h1>
+            <h2>Andre is getting older. Again.</h2>
+            <time datetime="2026-12-18">Sat, 27 Sep 2026, 10PM</time>
+            <p>10 users</p>
+        </section>
+
+
+        <section class="poll-showcase">
+            <ul>
+                <li class="poll-card">
+                    <h3>What time will Anre lose track of his phone</h3>
+                    <ul>
+                        <li>before midnight</li>
+                        <li>after midnight</li>
+                        <li>Never - new year, new Andre?</li>
+                    </ul>
+                    <p>4 users have voted</p>
+                    <p>Status: <strong>open</strong></p>
+                </li>
+            </ul>
+            <button type="button" popovertarget="create-poll-popup">+ Create Question</button>
+
+            <!-- HIDDEN, opened by button -->
+            <div id="create-poll-popup" popover>
+                <button type="button" popovertarget="create-poll-popup" popovertargetaction="hide">Cancel</button>
+                <h1>Create your Tipsy event</h1>
+
+                <form action="events.html" method="get">
+                    <label for="poll-name">Name</label>
+                    <input id="poll-name" name="name" type="text" required>
+
+                    <label for="poll-type">Type of question</label>
+                    <input id="poll-type" name="type" type="radio" required>
+
+                    <label for="poll-option">Option 1</label>
+                    <input id="poll-option" name="option" type="text" required>
+
+                    <label for="poll-option">Option 2</label>
+                    <input id="poll-option" name="option" type="text" required>
+
+                    <button type="submit">Create Question</button>
+                </form>
+            </div>
+        </section>
+    </body>
+
+    <footer>
+        <p>© 2026 Tipsy</p>
+    </footer>
+</body>
+</html>
