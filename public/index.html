@@ -1,34 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/dd1616d30f.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Anton+SC&family=Carter+One&family=Chewy&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Creepster&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="./css/style.css">
     <title>Tipsy</title>
-    <link rel="stylesheet" media="all" href="css/style.css">
 </head>
 
+
 <body>
-    <header>
+    <header class="header">
+        <i class="fa-solid fa-bars"></i>
         <h1>Tipsy</h1>
     </header>
-    <main>
-        <h1>Welcome back!</h1>
-        <h2>Make your prediction, beat your friends.</h2>
-        <form action="user-page.html" method="get">
-            <label for="username">username</label>
-            <input id="username" name="username" type="username" required placeholder="exampleName">
 
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" required>
 
-            <button type="submit">Log in</button>
-            <p>New here? <a href="register.html">Register</a></p>
-        </form>
-        <footer>
-            <p>© 2026 Tipsy</p>
-        </footer>
+
+
+    <main class="main">
+        <div class="main_img">
+            <div class="main_img_layer">
+                <p class="p1">More than plans</p>
+                <p class="p2">Make it a game</p>
+                <p class="p3">Create custom events, make predictions and see who really knows the crew</p>
+            </div>
+        </div>
+
+
+        <section class="login_section">
+            <h2>Welcome Back!</h2>
+            <p>Log in into your account and keep the fun going</p>
+
+
+            <form action="" class="login_form">
+                <input type="email" name="email" id="email" placeholder="email">
+                <input type="password" name="password" id="password" placeholder="password">
+                <button type="submit">Log in</button>
+            </form>
+           
+            <div class="register_div">
+                <span>New here?</span>
+                <a href="">Register</a>
+            </div>
+        </section>
     </main>
 </body>
+
 
 </html>
