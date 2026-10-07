@@ -9,6 +9,11 @@ body{
     font-family: "Carter One", system-ui;
 }
 
+main{
+    min-height: 85vh;
+}
+
+/*Login */
 
 .header {
     display: grid;
@@ -221,3 +226,211 @@ body{
         font-size: 16px;
     }
 }
+
+/*Login*/
+
+
+/*Register*/
+
+.register_main_register{
+    h2{
+        color: #fff;
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    h3{
+        color: #b0b0b0;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+
+.register_form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        input{
+            background-color: #363636;
+            padding: 10px;
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        label{
+            color: #fff;
+        }
+
+
+        button{
+            padding: 8px;
+            border: none;
+            background-color: #FFE100;
+            border-radius: 10px;
+            color: #000;
+            font-weight: 800;
+            cursor: pointer;
+        }
+    }
+
+    .login_option{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        p{
+            color: #fff;
+        }
+
+        a{
+            color: #FFE100;
+        }
+    }
+
+    .form_container{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .register_main_intro{
+        min-height: 18vh;
+        position: relative;
+    }
+    
+    .box1{
+        position: absolute;
+        left: calc(50% - 60px);
+        top: 30px;
+        rotate: -30deg;
+        background-color: #A9ff59;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+    }    
+    
+    .box2{
+        position: absolute;
+        left: calc(35% - 60px);
+        top: 30px;
+        rotate: -15deg;
+        background-color: #FF676A;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .box3{
+         position: absolute;
+        left: calc(65% - 60px);
+        top: 30px;
+        rotate: 20deg;
+        background-color: #BB53E7;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    @media (min-width: 900px) {
+
+    .register_main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: calc(100vh - 70px);
+    }
+
+    .register_main_intro {
+        min-height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .register_main_register {
+        justify-content: center;
+        padding: 70px 90px;
+    }
+
+    .register_main_register h2 {
+        font-size: 38px;
+    }
+
+    .register_main_register h3 {
+        font-size: 18px;
+    }
+
+    .form_container {
+        width: 100%;
+        max-width: 550px;
+    }
+
+    .register_form input {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    .register_form button {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .box1,
+    .box2,
+    .box3 {
+        width: 180px;
+        height: 180px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .box1 {
+        left: 42%;
+        top: 18%;
+        rotate: -20deg;
+    }
+
+    .box2 {
+        left: 18%;
+        top: 42%;
+        rotate: -10deg;
+    }
+
+    .box3 {
+        left: 55%;
+        top: 50%;
+        rotate: 15deg;
+    }
+
+    .footer {
+        grid-column: 1 / -1;
+    }
+}
+
+    .footer{
+        display: flex;
+        justify-content: center;
+        color: #fff;
+        background-color: #000;
+        padding: 20px;
+    }
