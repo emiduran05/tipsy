@@ -1,0 +1,14 @@
+Start it again (after a reboot)
+docker start my-postgres-container
+
+Stop it
+docker stop my-postgres-container
+
+Is it running?
+docker ps (stopped ones too: docker ps -a)
+
+Why did it stop?
+docker logs my-postgres-container
+
+Start completely fresh (deletes all data!)
+docker rm -f my-postgres-container and docker volume rm pg-data
