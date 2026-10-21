@@ -15,6 +15,7 @@ router.get("/hola", requireAuth, (req, res) => {
 
 
 router.get("/login", pagesController.showLogin);
+router.get("/register", pagesController.showRegister);
 
 
 module.exports = router;
