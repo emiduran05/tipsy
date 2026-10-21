@@ -1,11 +1,12 @@
 const { Pool } = require('pg');
+require('dotenv').config();
 
 const pool = new Pool({
-  host: 'localhost',
-  port: 5432,
-  user: 'postgres',
-  password: '12345',
-  database: 'projectdb',
+  host: process.env.HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 const query = (text, params) => pool.query(text, params);
@@ -55,4 +56,4 @@ async function connectDB() {
   console.log('Tables ready');
 }
 
-module.exports = { query, connectDB };
+module.exports = { query, connectDB, pool };

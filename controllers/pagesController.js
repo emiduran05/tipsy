@@ -1,9 +1,17 @@
 const pagesController = {
     
     showLogin: (req, res) => {
-        res.sendFile("index.html", {root: "./public"}, (err) => {
+        res.sendFile("index.html", {root: "./views/public"}, (err) => {
             if(err){
                 console.log("Error loading file: ", err)
+            }
+        })
+    },
+
+    showRegister: (req, res) => {
+        res.sendFile("register.html", {root: "./views/public"}, (err) => {
+            if(err){
+                console.log("Error loading file")
             }
         })
     }
