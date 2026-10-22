@@ -3,7 +3,9 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const pagesRoutes = require("./routes/pagesRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
+const pollsRoutes = require("./routes/pollsRoutes");
 const questionsRoutes = require("./routes/questionsRoutes.js");
+const { connectDB } = require("./db/db.js");
 
 const SECRET = process.env.SECRET;
 const app = express();
@@ -16,9 +18,17 @@ app.use(express.static("views/public/resources"))
 app.use(pagesRoutes);
 app.use(userRoutes);
 app.use(questionsRoutes);
+app.use(pollsRoutes);
 
 
-app.listen(PORT, () =>{
-  console.log(`Port listening ${PORT}`)
-})
+connectDB()
+  .then(() => {
+    app.listen(PORT, () =>{
+      console.log(`Port listening ${PORT}`)
+    })
+  })
+  .catch((error) => {
+    console.error("Database setup failed: ", error);
+    process.exit(1);
+  });
 

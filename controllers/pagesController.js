@@ -24,10 +24,10 @@ const pagesController = {
         })
     },
 
-    showEvent: (req,res) => {
-        res.sendFile("event.html",{root: "./views/private"}, (err) => {
+    showUser: (req,res) => {
+        res.sendFile("user-page.html",{root: "./views/private"}, (err) => {
             if(err){
-                console.log(error)
+                console.log("Error loading file: ", err)
             }
         })
     }

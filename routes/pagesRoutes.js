@@ -17,7 +17,7 @@ router.get("/hola", requireAuth, (req, res) => {
 router.get("/login", pagesController.showLogin);
 router.get("/register", pagesController.showRegister);
 router.get("/questions", requireAuth, pagesController.showQuestions);
-router.get("/events",requireAuth, pagesController.showEvent)
+router.get("/user-page",requireAuth, pagesController.showUser)
 
 
 module.exports = router;

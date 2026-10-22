@@ -10,18 +10,17 @@ const userController = {
         try {
             const { username, password } = req.body;
             const user = await userModel.getUserData({ username });
-            const isValid = await bcrypt.compare(password, user.password_hash )
-
             if (!user) {
                 res.status(401).json({ status: "Not found" });
             } else {
+                const isValid = await bcrypt.compare(password, user.password_hash);
 
                 if (isValid) {
                     const token = crypto.randomBytes(64).toString("hex");
 
                     sessions[token] = { id: user.id, user: username };
 
-                    res.cookie("authToken", token, { signed: true, httOnly: true });
+                    res.cookie("authToken", token, { signed: true, httpOnly: true });
                     res.status(200).json({ status: "OK" });
                 }else{
                     res.status(401).json({status: "Invalid credetnials"})
@@ -30,7 +29,7 @@ const userController = {
             }
 
         } catch (error) {
-            res.status(500).json("Internal server error: ");
+            res.status(500).json({ status: "Internal server error" });
             console.log(error);
         }
     },

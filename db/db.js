@@ -53,6 +53,8 @@ async function connectDB() {
       UNIQUE (question_id, user_id)
     );
   `);
+
+  await pool.query("ALTER TABLE polls ADD COLUMN IF NOT EXISTS description VARCHAR(255)");
   console.log('Tables ready');
 }
 
