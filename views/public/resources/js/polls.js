@@ -56,9 +56,9 @@ function displayPolls(polls) {
         const userCount = document.createElement("p");
         userCount.textContent = `${poll.user_count} users`;
 
-        // Link to the event page, with the id of this event
+        // Link to the questions page, with the id of this event
         const link = document.createElement("a");
-        link.href = `event.html?pollId=${poll.id}`;
+        link.href = `/questions?pollId=${poll.id}`;
         link.textContent = "Open";
 
         // Add everything to card

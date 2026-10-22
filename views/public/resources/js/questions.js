@@ -1,3 +1,6 @@
+
+const pollId = new URLSearchParams(window.location.search).get("pollId");
+
 const tabs = document.querySelectorAll(".poll-tab");
 const contents = document.querySelectorAll(".poll-tab-content");
 
@@ -95,12 +98,6 @@ function displayQuestions(questions) {
     });
 }
 
-// Execute when page loads
-document.addEventListener("DOMContentLoaded", () => {
-    fetchUQuestions(1);
-});
-
-
 async function fetchAnsweredQuestions(pollId) {
     try {
         const res = await fetch(`/answered/questions/${pollId}`);
@@ -154,10 +151,6 @@ function displayAnsweredQuestions(questions) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchAnsweredQuestions(1);
-});
-
 async function fetchLeaderboard(pollId) {
     try {
         const res = await fetch(`/polls/${pollId}/leaderboard`);
@@ -202,8 +195,6 @@ function displayLeaderboard(users) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    const pollId = 1;
 
     fetchUQuestions(pollId);
     fetchAnsweredQuestions(pollId);
@@ -272,8 +263,8 @@ form.addEventListener("submit", async(e) => {
     };
 
     overlay.classList.remove("overlay-active")
-    await fetchPostQuestion(1, question);
-    fetchUQuestions(1)
+    await fetchPostQuestion(pollId, question);
+    fetchUQuestions(pollId)
 
 
 });
