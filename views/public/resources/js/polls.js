@@ -29,15 +29,12 @@ function displayPolls(polls) {
 
     polls.forEach(poll => {
 
-        // Create event card 
         const card = document.createElement("li");
         card.className = "event-card";
 
-        // Event name
         const title = document.createElement("h3");
         title.textContent = poll.name;
 
-        // Date
         const date = document.createElement("time");
         if (poll.deadline) {
             const deadline = new Date(poll.deadline);
@@ -49,26 +46,22 @@ function displayPolls(polls) {
             date.textContent = "No date";
         }
 
-        // Number of polls
         const questionCount = document.createElement("p");
         questionCount.textContent = `${poll.question_count} polls`;
 
         const userCount = document.createElement("p");
         userCount.textContent = `${poll.user_count} users`;
 
-        // Link to the event page, with the id of this event
         const link = document.createElement("a");
-        link.href = `event.html?pollId=${poll.id}`;
+        link.href = `/questions?pollId=${poll.id}`;
         link.textContent = "Open";
 
-        // Add everything to card
         card.appendChild(title);
         card.appendChild(date);
         card.appendChild(questionCount);
         card.appendChild(userCount);
         card.appendChild(link);
 
-        // Add card to HTML
         container.appendChild(card);
     });
 }
