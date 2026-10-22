@@ -1,26 +1,26 @@
- const tabs = document.querySelectorAll(".poll-tab");
-    const contents = document.querySelectorAll(".poll-tab-content");
+const tabs = document.querySelectorAll(".poll-tab");
+const contents = document.querySelectorAll(".poll-tab-content");
 
-    tabs.forEach(tab => {
+tabs.forEach(tab => {
 
-        tab.addEventListener("click", () => {
+    tab.addEventListener("click", () => {
 
-            const selectedTab = tab.dataset.tab;
+        const selectedTab = tab.dataset.tab;
 
-            tabs.forEach(t => t.classList.remove("active"));
+        tabs.forEach(t => t.classList.remove("active"));
 
-            contents.forEach(content => {
-                content.classList.remove("active");
-            });
-
-            tab.classList.add("active");
-
-            document.getElementById(selectedTab)
-                .classList.add("active");
-
+        contents.forEach(content => {
+            content.classList.remove("active");
         });
 
+        tab.classList.add("active");
+
+        document.getElementById(selectedTab)
+            .classList.add("active");
+
     });
+
+});
 
 
 
@@ -210,3 +210,95 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchLeaderboard(pollId);
 
 });
+
+
+//Create question
+
+const createBtn = document.querySelector(".create-btn");
+const overlay = document.querySelector(".overlay");
+const xmark = document.querySelector(".xmark");
+
+createBtn.addEventListener("click", () => {
+    overlay.classList.add("overlay-active")
+})
+
+xmark.addEventListener("click", (e) => {
+    overlay.classList.remove("overlay-active")
+})
+
+const addButton = document.querySelector(".addButton");
+const optionsContainer = document.querySelector(".options_container");
+
+addButton.addEventListener("click", () => {
+    const option = document.createElement("div");
+    option.classList.add("options_container_option");
+
+    const index = optionsContainer.querySelectorAll(".options_container_option").length;
+
+    option.innerHTML = `
+        <input type="radio" value="${index}" name="correct_option" class="correct_answer">
+        <input type="text" placeholder="Option ${index + 1}" required class="option_answer">
+        <input type="number" placeholder="Points" min="0" required class="option_value">
+    `;
+
+    optionsContainer.appendChild(option);
+});
+
+const form = document.getElementById("createQuestion");
+
+form.addEventListener("submit", async(e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("question").value;
+    const optionElements = document.querySelectorAll(".options_container_option");
+
+    const options = [];
+
+    for (const option of optionElements) {
+        const label = option.querySelector('.option_answer').value;
+        const points = Number(option.querySelector('.option_value').value);
+        const correct_option = option.querySelector('.correct_answer').checked;
+
+        options.push({
+            label: label,
+            points: points,
+            correct_option: correct_option
+        });
+    }
+
+    const question = {
+        name: name,
+        options: options
+    };
+
+    overlay.classList.remove("overlay-active")
+    await fetchPostQuestion(1, question);
+    fetchUQuestions(1)
+
+
+});
+
+//fetch post question
+
+async function fetchPostQuestion(pollId, question) {
+    try {
+        const res = await fetch(`/polls/${pollId}/questions`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(question)
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error);
+            return;
+        }
+
+
+    } catch (error) {
+        console.error(error);
+    }
+}

@@ -5,6 +5,7 @@ const {query} = require("../db/db");
 
 router.get("/unanswered/questions/:pollId", questionsController.getUnansweredQuestions);
 router.get("/answered/questions/:pollId", questionsController.getAnsweredQuestions);
+router.post("/polls/:pollId/questions", questionsController.postQuestion);
 
 router.get("/polls/:id/leaderboard", async (req, res) => { //solo de prueba
     try {

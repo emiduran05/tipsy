@@ -41,7 +41,6 @@ async function fetchRegister(name, lastname, username, email, password) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* For LOGIN */
 
     const loginForm = document.getElementById("login_form");
 
@@ -56,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* For REGISTER */
 
     const registerForm = document.getElementById("register_form");
 
