@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 
 const userController = {
+
     login: async function (req, res) {
         try {
             const { username, password } = req.body;
@@ -18,7 +19,7 @@ const userController = {
                 if (isValid) {
                     const token = crypto.randomBytes(64).toString("hex");
 
-                    sessions[token] = { username };
+                    sessions[token] = { id: user.id, user: username };
 
                     res.cookie("authToken", token, { signed: true, httOnly: true });
                     res.status(200).json({ status: "OK" });

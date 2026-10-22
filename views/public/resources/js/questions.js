@@ -1,0 +1,212 @@
+ const tabs = document.querySelectorAll(".poll-tab");
+    const contents = document.querySelectorAll(".poll-tab-content");
+
+    tabs.forEach(tab => {
+
+        tab.addEventListener("click", () => {
+
+            const selectedTab = tab.dataset.tab;
+
+            tabs.forEach(t => t.classList.remove("active"));
+
+            contents.forEach(content => {
+                content.classList.remove("active");
+            });
+
+            tab.classList.add("active");
+
+            document.getElementById(selectedTab)
+                .classList.add("active");
+
+        });
+
+    });
+
+
+
+async function fetchUQuestions(pollId) {
+    try {
+        const res = await fetch(`/unanswered/questions/${pollId}`);
+
+        if (!res.ok) {
+            throw new Error("Error fetching questions");
+        }
+
+        const questions = await res.json();
+
+        displayQuestions(questions);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function displayQuestions(questions) {
+
+    const container = document.getElementById("questions-container");
+
+    container.innerHTML = "";
+
+    questions.forEach(question => {
+
+        // Create question card
+        const card = document.createElement("article");
+        card.className = "question-card";
+
+        // Question title
+        const title = document.createElement("h2");
+        title.textContent = question.name;
+
+        // Options container
+        const optionsContainer = document.createElement("div");
+        optionsContainer.className = "options";
+
+        // Create each option
+        question.options.forEach(option => {
+
+            const button = document.createElement("button");
+
+            button.textContent = option.label;
+
+            button.addEventListener("click", () => {
+                console.log("Question:", question.id);
+                console.log("Selected option:", option.id);
+            });
+
+            optionsContainer.appendChild(button);
+        });
+
+        // Question footer
+        const footer = document.createElement("div");
+        footer.className = "question-footer";
+
+        const status = document.createElement("span");
+        status.textContent = "Status: OPEN";
+
+        footer.appendChild(status);
+
+        // Add everything to card
+        card.appendChild(title);
+        card.appendChild(optionsContainer);
+        card.appendChild(footer);
+
+        // Add card to HTML
+        container.appendChild(card);
+    });
+}
+
+// Execute when page loads
+document.addEventListener("DOMContentLoaded", () => {
+    fetchUQuestions(1);
+});
+
+
+async function fetchAnsweredQuestions(pollId) {
+    try {
+        const res = await fetch(`/answered/questions/${pollId}`);
+        const questions = await res.json();
+
+        displayAnsweredQuestions(questions);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function displayAnsweredQuestions(questions) {
+
+    const container = document.getElementById("answered-container");
+    container.replaceChildren();
+
+    questions.forEach(question => {
+
+        const card = document.createElement("article");
+        card.className = "question-card";
+
+        const title = document.createElement("h2");
+        title.textContent = question.name;
+
+        const optionsContainer = document.createElement("div");
+        optionsContainer.className = "options";
+
+        question.options.forEach(option => {
+
+            const button = document.createElement("button");
+            button.textContent = option.label;
+            button.disabled = true;
+
+            if (option.id === question.option_id) {
+                button.classList.add("selected-answer");
+            }
+
+            optionsContainer.appendChild(button);
+        });
+
+        const footer = document.createElement("div");
+        footer.className = "question-footer";
+        footer.textContent = "Answered";
+
+        card.appendChild(title);
+        card.appendChild(optionsContainer);
+        card.appendChild(footer);
+
+        container.appendChild(card);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetchAnsweredQuestions(1);
+});
+
+async function fetchLeaderboard(pollId) {
+    try {
+        const res = await fetch(`/polls/${pollId}/leaderboard`);
+        const users = await res.json();
+
+        displayLeaderboard(users);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function displayLeaderboard(users) {
+
+    const container = document.getElementById("leaderboard-list");
+    container.replaceChildren();
+
+    users.forEach((user, index) => {
+
+        const row = document.createElement("div");
+        row.className = "leaderboard-user";
+
+        if (index === 0) row.classList.add("first");
+        if (index === 1) row.classList.add("second");
+        if (index === 2) row.classList.add("third");
+
+        const position = document.createElement("span");
+        position.textContent = index + 1;
+
+        const username = document.createElement("span");
+        username.textContent = user.username;
+
+        const points = document.createElement("strong");
+        points.textContent = `${user.total_points} pts`;
+
+        row.appendChild(position);
+        row.appendChild(username);
+        row.appendChild(points);
+
+        container.appendChild(row);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const pollId = 1;
+
+    fetchUQuestions(pollId);
+    fetchAnsweredQuestions(pollId);
+    fetchLeaderboard(pollId);
+
+});

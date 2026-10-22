@@ -14,6 +14,22 @@ const pagesController = {
                 console.log("Error loading file")
             }
         })
+    },
+
+    showQuestions: (req, res) => {
+        res.sendFile("questions.html", {root: "./views/private"}, (err) => {
+            if(err){
+                console.log("Error loading file")
+            }
+        })
+    },
+
+    showEvent: (req,res) => {
+        res.sendFile("event.html",{root: "./views/private"}, (err) => {
+            if(err){
+                console.log(error)
+            }
+        })
     }
 }
 
