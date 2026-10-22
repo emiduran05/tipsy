@@ -1,19 +1,30 @@
 //login fethc
 async function fetchLogin(username, password) {
 
-    await fetch("/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    })
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.error(err))
+    try {
+        const res = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.status);
+        }
+
+        window.location.href = "/user-page";
+
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
 
 }
 
