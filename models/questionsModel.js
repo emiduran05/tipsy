@@ -18,6 +18,13 @@ const questionsModel = {
         const res = await query("SELECT * FROM questions WHERE poll_id = $1 AND id IN (SELECT question_id FROM user_answers WHERE user_id = $2)", [pollId, userId])
 
         return res.rows;
+    },
+
+    postQuestion: async function(pollId, name){
+        const res = await query("INSERT INTO questions (poll_id, name) VALUES ($1, $2) RETURNING *", [pollId, name]);
+
+        return res.rows[0];
+
     }
 }
 
