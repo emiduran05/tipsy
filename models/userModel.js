@@ -8,7 +8,7 @@ const authModel = {
         const { username} = userData;
 
          //database query
-        const res = await pool.query("SELECT email, password_hash FROM users WHERE email = $1 ", [username]);
+        const res = await pool.query("SELECT email, password_hash, id FROM users WHERE email = $1 ", [username]);
 
         return res.rows[0];
 
