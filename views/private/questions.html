@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/questions.js" defer></script>
+    <script src="https://kit.fontawesome.com/dd1616d30f.js" crossorigin="anonymous"></script>
 
     <title>Tipsy</title>
 </head>
@@ -70,7 +71,7 @@
         <section id="leaderboard" class="poll-tab-content">
 
             <div class="leaderboard-container">
-                <h2>🏆 Leaderboard</h2>
+                <h2><i class="fa-solid fa-trophy"></i> Leaderboard</h2>
                 <p>Top players of this poll</p>
 
                 <div class="leaderboard-list" id="leaderboard-list"></div>
@@ -79,6 +80,40 @@
         </section>
 
     </main>
+
+    <div class="overlay">
+
+        <form id="createQuestion">
+            <div class="xmark">X</div>
+            <label for="question"><h2>Question:</h2></label>
+            <input type="text" id="question" required="true" placeholder="Who will arrive late?">
+
+            <div class="options_container">
+                <h3>Question options:</h3>
+                <span>Select the correct answer</span>
+                <div class="options_container_option">
+                    <input type="radio" value="0" name="correct_option" class="correct_answer">
+                    <input type="text" placeholder="Emiliano" class="option_answer">
+                    <input type="number" placeholder="points" class="option_value">
+                </div>
+
+                <div class="options_container_option">
+                    <input type="radio" value="1" name="correct_option" class="correct_answer">
+                    <input type="text" placeholder="Isabelle" class="option_answer">
+                    <input type="number" placeholder="points" class="option_value">
+                </div>
+
+
+            </div>
+                <div class="addButton">Add option</div>
+
+
+            <button type="submit">Create question</button>
+
+        </form>
+    </div>
+
+
 
     <footer class="footer">
         <p>© 2026 Tipsy</p>

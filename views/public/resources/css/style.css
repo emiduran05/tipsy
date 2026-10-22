@@ -987,3 +987,122 @@ h1, h2 {
         font-size: 16px;
     }
 }
+
+
+/*pop up */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.overlay-active{
+    display: flex;
+}
+
+#createQuestion {
+    position: relative;
+    background-color: #282727;
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    input {
+        background-color: #383838;
+        color: white;
+        border: 1px solid #505050;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 14px;
+        box-sizing: border-box;
+        min-width: 0;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #ffe000;
+    }
+
+    button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        background-color: #ffe000;
+        color: #000;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+
+}
+
+.options_container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    span{
+        font-size: 12px;
+    }
+}
+
+.options_container_option {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) 85px;
+    align-items: center;
+    gap: 12px;
+
+    input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        padding: 0;
+        accent-color: #ffe000;
+        cursor: pointer;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+    }
+}
+
+.addButton{
+    padding: 10px;
+    background-color: #1a1a1a;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    #createQuestion {
+        padding: 20px;
+    }
+
+    .options_container_option {
+        grid-template-columns: 20px minmax(0, 1fr) 70px;
+        gap: 8px;
+    }
+}
+
+.xmark{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
