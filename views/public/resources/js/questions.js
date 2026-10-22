@@ -1,3 +1,6 @@
+
+const pollId = new URLSearchParams(window.location.search).get("pollId");
+
 const tabs = document.querySelectorAll(".poll-tab");
 const contents = document.querySelectorAll(".poll-tab-content");
 
@@ -49,19 +52,15 @@ function displayQuestions(questions) {
 
     questions.forEach(question => {
 
-        // Create question card
         const card = document.createElement("article");
         card.className = "question-card";
 
-        // Question title
         const title = document.createElement("h2");
         title.textContent = question.name;
 
-        // Options container
         const optionsContainer = document.createElement("div");
         optionsContainer.className = "options";
 
-        // Create each option
         question.options.forEach(option => {
 
             const button = document.createElement("button");
@@ -76,7 +75,7 @@ function displayQuestions(questions) {
             optionsContainer.appendChild(button);
         });
 
-        // Question footer
+
         const footer = document.createElement("div");
         footer.className = "question-footer";
 
@@ -85,21 +84,13 @@ function displayQuestions(questions) {
 
         footer.appendChild(status);
 
-        // Add everything to card
         card.appendChild(title);
         card.appendChild(optionsContainer);
         card.appendChild(footer);
 
-        // Add card to HTML
         container.appendChild(card);
     });
 }
-
-// Execute when page loads
-document.addEventListener("DOMContentLoaded", () => {
-    fetchUQuestions(1);
-});
-
 
 async function fetchAnsweredQuestions(pollId) {
     try {
@@ -154,10 +145,6 @@ function displayAnsweredQuestions(questions) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchAnsweredQuestions(1);
-});
-
 async function fetchLeaderboard(pollId) {
     try {
         const res = await fetch(`/polls/${pollId}/leaderboard`);
@@ -202,8 +189,6 @@ function displayLeaderboard(users) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    const pollId = 1;
 
     fetchUQuestions(pollId);
     fetchAnsweredQuestions(pollId);
@@ -272,8 +257,8 @@ form.addEventListener("submit", async(e) => {
     };
 
     overlay.classList.remove("overlay-active")
-    await fetchPostQuestion(1, question);
-    fetchUQuestions(1)
+    await fetchPostQuestion(pollId, question);
+    fetchUQuestions(pollId)
 
 
 });
