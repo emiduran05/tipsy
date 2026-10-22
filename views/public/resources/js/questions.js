@@ -65,13 +65,21 @@ function displayQuestions(questions) {
         question.options.forEach(option => {
 
             const button = document.createElement("button");
-
+            
             button.textContent = option.label;
 
             button.addEventListener("click", () => {
-                console.log("Question:", question.id);
-                console.log("Selected option:", option.id);
+
+                optionsContainer.querySelectorAll(".active-option").forEach(button => button.classList.remove("active-option"));
+
+                button.classList.add("active-option")
+                questionId = question.id;
+                questionAnswerId = option.id;
+
+
+                
             });
+
 
             optionsContainer.appendChild(button);
         });
@@ -83,7 +91,6 @@ function displayQuestions(questions) {
         const status = document.createElement("span");
         status.textContent = "Status: OPEN";
 
-        footer.appendChild(status);
 
         // Add everything to card
         card.appendChild(title);

@@ -1106,3 +1106,13 @@ h1, h2 {
     padding: 10px;
     cursor: pointer;
 }
+
+.send-option-btn{
+    padding: 5px 10px;
+    border-radius: 10px;
+
+}
+
+.options .active-option{
+    background-color: #ffe000;
+}
