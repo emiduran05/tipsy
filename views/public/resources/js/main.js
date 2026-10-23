@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const password = document.getElementById("password").value;
 
             await fetchRegister(name, lastname, username, email, password);
+            window.location.replace("/login");
         });
     }
 

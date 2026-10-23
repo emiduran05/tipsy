@@ -52,22 +52,18 @@ function displayQuestions(questions) {
 
     questions.forEach(question => {
 
-        // Create question card
         const card = document.createElement("article");
         card.className = "question-card";
 
-        // Question title
         const title = document.createElement("h2");
         title.textContent = question.name;
 
-        // Options container
         const optionsContainer = document.createElement("div");
         optionsContainer.className = "options";
 
         let questionId = "";
         let questionAnswerId = "";
 
-        // Create each option
         question.options.forEach(option => {
 
             const button = document.createElement("button");
@@ -95,7 +91,6 @@ function displayQuestions(questions) {
         sendButton.classList.add("send-option-btn")
         sendButton.textContent = "Send"
 
-        // Question footer
         const footer = document.createElement("div");
         footer.className = "question-footer";
 
@@ -131,12 +126,10 @@ function displayQuestions(questions) {
         });
 
 
-        // Add everything to card
         card.appendChild(title);
         card.appendChild(optionsContainer);
         card.appendChild(footer);
 
-        // Add card to HTML
         container.appendChild(card);
     });
 }
