@@ -14,19 +14,35 @@ const pollsController = {
                 error: "Internal Server error"
             })
         }
-        
-        
+
+
     },
 
-    getPollById: async function(req,res){
+    getPollById: async function (req, res) {
         try {
-            const {pollId} = req.params;
+            const pollId = Number(req.params.pollId);
+
+            if (!Number.isInteger(pollId)) {
+                return res.status(400).json({
+                    error: "pollId must be a number"
+                });
+            }
+
             const poll = await pollsModel.getPollById(pollId);
 
+            if (!poll) {
+                return res.status(404).json({
+                    error: "Poll not found"
+                });
+            }
+
             res.status(200).json(poll);
+
         } catch (error) {
-            res.status(500).json("Internal server error")
-            console.log(error)
+            console.error(error);
+            res.status(500).json({
+                error: "Internal Server error"
+            });
         }
     },
 
