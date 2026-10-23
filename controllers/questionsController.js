@@ -203,42 +203,6 @@ updateQuestion: async function(req, res) {
     }
 },
 
-deleteQuestion: async function(req, res) {
-    try {
-        const token = req.signedCookies.authToken;
-
-        if (!token || !sessions[token]) {
-            return res.status(401).json({
-                error: "Unauthorized"
-            });
-        }
-
-        const userId = sessions[token].id;
-        const { questionId } = req.params;
-
-        const question = await questionsModel.deleteQuestion(
-            questionId,
-            userId
-        );
-
-        if (!question) {
-            return res.status(404).json({
-                error: "Question not found or you don't have permission"
-            });
-        }
-
-        return res.status(200).json({
-            message: "Question deleted successfully"
-        });
-
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            error: "Internal Server error"
-        });
-    }
-},
-
 }
 
 module.exports = questionsController;

@@ -21,7 +21,6 @@ const pollsController = {
     },
 
     getPollById: async function (req, res) {
-    getPollById: async function (req, res) {
         try {
             const { pollId } = req.params;
             const poll = await pollsModel.getPollById(pollId);

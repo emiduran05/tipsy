@@ -44,7 +44,7 @@ const questionsModel = {
         return result.rows[0];
     },
 
-    deleteQuestion2: async function (questionId) {
+    deleteQuestion: async function (questionId) {
         const result = await query(
             `WITH deleted_answers AS (
              DELETE FROM user_answers WHERE question_id = $1
@@ -56,12 +56,6 @@ const questionsModel = {
          RETURNING *`,
             [questionId]
         );
-        return result.rows[0];
-    },
-
-    deleteQuestion: async function (questionId, userId) {
-        const result = await query("DELETE FROM questions q USING polls p WHERE q.poll_id = p.id AND q.id = $1 AND p.creator_id = $2 RETURNING q.*", [questionId, userId]);
-
         return result.rows[0];
     },
 }
