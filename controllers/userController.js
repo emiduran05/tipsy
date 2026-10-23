@@ -22,8 +22,8 @@ const userController = {
 
                     res.cookie("authToken", token, { signed: true, httpOnly: true });
                     res.status(200).json({ status: "OK" });
-                }else{
-                    res.status(401).json({status: "Invalid credetnials"})
+                } else {
+                    res.status(401).json({ status: "Invalid credetnials" })
                 }
 
             }
@@ -35,24 +35,50 @@ const userController = {
     },
 
 
-    register: async function (req, res){
+    register: async function (req, res) {
         try {
-            const {name, lastname, username, email, password} = req.body;
+            const { name, lastname, username, email, password } = req.body;
 
-            if(!name || !lastname || !username || !email || !password){
-                res.status(400).json({status: "Missing values"})
-            }else{
+            if (!name || !lastname || !username || !email || !password) {
+                res.status(400).json({ status: "Missing values" })
+            } else {
 
-                const newUser = await userModel.registerUser({name, lastname, username, email, password});
+                const newUser = await userModel.registerUser({ name, lastname, username, email, password });
                 res.status(200).json(newUser);
 
-            }            
-            
+            }
+
         } catch (error) {
-            res.status(500).json({status: "Internal Server error"});
+            res.status(500).json({ status: "Internal Server error" });
             console.log(error);
         }
-    }
+    },
+
+    getCurrentUser: async function (req, res) {
+        try {
+            const token = req.signedCookies.authToken;
+
+            if (!token || !sessions[token]) {
+                return res.status(401).json({
+                    error: "User not authenticated"
+                });
+            }
+
+            const user = sessions[token];
+
+            res.status(200).json({
+                id: user.id,
+                username: user.user
+            });
+
+        } catch (error) {
+            console.error(error);
+
+            res.status(500).json({
+                error: "Internal server error"
+            });
+        }
+    },
 }
 
 module.exports = userController;
