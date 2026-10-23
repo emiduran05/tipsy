@@ -8,6 +8,6 @@ router.post("/polls", pollsController.createPoll);
 router.get("/polls/:pollId", pollsController.getPollById);
 router.patch("/polls/:pollId", pollsController.updatePollName);
 router.delete("/polls/:pollId", pollsController.deletePoll);
-
+router.get("/polls/:id/leaderboard", pollsController.getLeaderboard);
 
 module.exports = router;
