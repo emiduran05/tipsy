@@ -1494,3 +1494,42 @@ footer p {
         font-size: 20px;
     }
 }
+
+
+.event-card {
+    position: relative;
+}
+
+.edit-poll-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    color: #ffe500;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.edit-poll-btn:hover {
+    color: white;
+}
+
+.event-card h3 {
+    padding-right: 30px;
+}
+
+.delete-poll-btn {
+    position: absolute;
+    top: 18px;
+    right: 50px;
+    background: transparent;
+    border: none;
+    color: #ff5252;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.delete-poll-btn:hover {
+    color: #ff8888;
+}

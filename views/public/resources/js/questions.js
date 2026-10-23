@@ -375,7 +375,7 @@ function displayPolls(poll) {
     if (poll.deadline) {
         const deadline = new Date(poll.deadline);
 
-        date.textContent = deadline.toLocaleDateString("en-GB", {
+        date.textContent = "Deadline: " + deadline.toLocaleDateString("en-GB", {
             weekday: "short",
             day: "numeric",
             month: "short",
