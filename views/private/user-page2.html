@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/dd1616d30f.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipsy</title>
+    <link rel="stylesheet" media="all" href="/css/style.css">
+    <script src="/js/polls2.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Tipsy</h1>
+    </header>
+
+    <section class="user-display">
+        <img src="/media/image.png" alt="">
+        <h1 class="user-welcome"></h1>
+        <h2>Good friends, bolder predictions</h2>
+        <div class="ranking">
+        </div>
+
+    </section>
+
+    <section class="events-showcase">
+
+        <ul class="polls" id="polls-container">
+            <!-- event cards are created by polls.js -->
+        </ul>
+
+        <!--
+        <ul>
+            <li class="event-card">
+                <h3>Andre's Birthday</h3>
+                <time datetime="2026-12-18">Sat, 27 Sep 2026, 10PM</time>
+                <p>4 polls</p>
+                <p>10 users</p>
+                <a href="event.html">Open</a>
+            </li>
+            <li class="event-card">
+                <h3>Taco Night</h3>
+                <time datetime="2026-11-02">2 Nov 2026, 8PM</time>
+                <p>2 polls</p>
+                <p>4 users</p>
+                <a href="event.html">Open</a>
+            </li>
+        </ul>
+        -->
+
+
+
+        <!-- HIDDEN, opened by button -->
+        <div id="create-event-popup" popover>
+            <button type="button" popovertarget="create-event-popup" popovertargetaction="hide">Cancel</button>
+            <h1>Create your Tipsy event</h1>
+
+            <form id="create-event-form">
+                <label for="event-name">Name</label>
+                <input id="event-name" name="name" type="text" required placeholder="World Cup Final Night">
+
+                <label for="event-date">Date</label>
+                <input id="event-date" name="date" type="date" required>
+
+                <label for="event-description">Description</label>
+                <input id="event-description" name="description" type="text">
+
+                <button type="submit">Create Event</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Tipsy</p>
+    </footer>
+
+</body>
+
+</html>

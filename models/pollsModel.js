@@ -29,7 +29,28 @@ const pollsModel = {
     );
     return result.rows[0];
 
-    }
+    },
+
+    updatePollName: async function(pollId, userId, name) {
+    const result = await query(`
+        UPDATE polls
+        SET name = $1
+        WHERE id = $2 AND creator_id = $3
+        RETURNING *
+    `, [name, pollId, userId]);
+
+    return result.rows[0];
+},
+
+deletePoll: async function(pollId, userId) {
+    const result = await query(`
+        DELETE FROM polls
+        WHERE id = $1 AND creator_id = $2
+        RETURNING *
+    `, [pollId, userId]);
+
+    return result.rows[0];
+},
 }
 
 module.exports = pollsModel;

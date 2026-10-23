@@ -6,8 +6,13 @@ const {query} = require("../db/db");
 router.get("/unanswered/questions/:pollId", questionsController.getUnansweredQuestions);
 router.get("/answered/questions/:pollId", questionsController.getAnsweredQuestions);
 router.post("/polls/:pollId/questions", questionsController.postQuestion);
+router.patch("/questions/:questionId", questionsController.updateQuestion);
 
-router.get("/polls/:id/leaderboard", async (req, res) => { //solo de prueba
+router.delete("/questions/:questionId", questionsController.deleteQuestion);
+
+
+
+router.get("/polls/:id/leaderboard", async (req, res) => { 
     try {
         const { id } = req.params;
 

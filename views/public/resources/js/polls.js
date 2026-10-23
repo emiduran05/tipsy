@@ -1,3 +1,55 @@
+async function updatePollName(pollId, newName) {
+    try {
+        const res = await fetch(`/polls/${pollId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: newName
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error);
+        }
+
+        console.log("Poll updated:", data);
+
+        return data;
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+async function deletePoll(pollId) {
+    if (!confirm("Are you sure you want to delete this event?")) {
+        return;
+    }
+
+    try {
+        const res = await fetch(`/polls/${pollId}`, {
+            method: "DELETE"
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error);
+        }
+
+        await fetchPolls();
+
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
+    }
+}
+
 async function fetchCurrentUser() {
     try {
         const res = await fetch("/users/me");
@@ -54,6 +106,40 @@ function displayPolls(polls) {
         const title = document.createElement("h3");
         title.textContent = poll.name;
 
+        const editButton = document.createElement("button");
+        editButton.innerHTML = '<i class="fa-solid fa-pencil"></i>';
+        editButton.className = "edit-poll-btn";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+        deleteButton.className = "delete-poll-btn";
+
+        deleteButton.addEventListener("click", () => {
+            deletePoll(poll.id);
+        });
+
+        editButton.addEventListener("click", async () => {
+            const newName = prompt("New poll name:", poll.name);
+
+            if (!newName || !newName.trim()) return;
+
+            const res = await fetch(`/polls/${poll.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name: newName.trim() })
+            });
+
+            if (res.ok) {
+                title.textContent = newName.trim();
+                poll.name = newName.trim();
+            } else {
+                const data = await res.json();
+                alert(data.error || "Error updating poll");
+            }
+        });
+
         const date = document.createElement("time");
         if (poll.deadline) {
             const deadline = new Date(poll.deadline);
@@ -76,6 +162,8 @@ function displayPolls(polls) {
         link.textContent = "Open";
 
         card.appendChild(title);
+        card.appendChild(editButton);
+        card.appendChild(deleteButton);
         card.appendChild(date);
         card.appendChild(questionCount);
         card.appendChild(userCount);
@@ -87,7 +175,7 @@ function displayPolls(polls) {
 
 async function createPoll(event) {
 
-    event.preventDefault();  
+    event.preventDefault();
 
     const form = document.getElementById("create-event-form");
 

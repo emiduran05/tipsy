@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/questions2.js" defer></script>
+    <script src="https://kit.fontawesome.com/dd1616d30f.js" crossorigin="anonymous"></script>
+
+    <title>Tipsy</title>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>Tipsy</h1>
+    </header>
+
+    <main class="main_questions">
+
+        <section class="poll-info">
+            <div class="poll-info-container">
+
+                <img src="https://tse1.mm.bing.net/th/id/OIP.nJZ6MepXe3e8ydIUJIJF1QHaE7?r=0&pid=Api&h=220&P=0"
+                    alt="Party">
+                <div class="poll-details">
+
+
+                    <div>
+                        <h2></h2>
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="poll-meta">
+                    <span></span>
+                    <span> </span>
+                </div>
+
+            </div>
+        </section>
+
+        <nav class="poll-tabs">
+            <button class="poll-tab active" data-tab="opened">
+                Opened Questions
+            </button>
+
+            <button class="poll-tab" data-tab="answered">
+                Questions Answered
+            </button>
+
+            <button class="poll-tab" data-tab="leaderboard">
+                Leaderboard
+            </button>
+        </nav>
+
+        <section id="opened" class="poll-tab-content active">
+
+            <div class="questions" id="questions-container">
+            </div>
+
+            <button class="create-btn">+ Create Question</button>
+
+        </section>
+
+        <section id="answered" class="poll-tab-content">
+            <div class="questions" id="answered-container">
+            </div>
+        </section>
+
+        <section id="leaderboard" class="poll-tab-content">
+
+            <div class="leaderboard-container">
+                <h2><i class="fa-solid fa-trophy"></i> Leaderboard</h2>
+                <p>Top players of this poll</p>
+
+                <div class="leaderboard-list" id="leaderboard-list"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <div class="overlay">
+
+        <form id="createQuestion">
+            <div class="xmark">X</div>
+            <label for="question">
+                <h2>Question:</h2>
+            </label>
+            <input type="text" id="question" required="true" placeholder="Who will arrive late?">
+
+            <div class="options_container">
+                <h3>Question options:</h3>
+                <span>Select the correct answer</span>
+                <div class="options_container_option">
+                    <input type="radio" value="0" name="correct_option" class="correct_answer">
+                    <input type="text" placeholder="Emiliano" class="option_answer">
+                    <input type="number" placeholder="points" class="option_value">
+                </div>
+
+                <div class="options_container_option">
+                    <input type="radio" value="1" name="correct_option" class="correct_answer">
+                    <input type="text" placeholder="Isabelle" class="option_answer">
+                    <input type="number" placeholder="points" class="option_value">
+                </div>
+
+
+            </div>
+            <div class="addButton">Add option</div>
+
+
+            <button type="submit">Create question</button>
+
+        </form>
+    </div>
+
+
+
+    <footer class="footer">
+        <p>© 2026 Tipsy</p>
+    </footer>
+
+</body>
+
+</html>

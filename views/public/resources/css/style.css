@@ -1494,3 +1494,78 @@ footer p {
         font-size: 20px;
     }
 }
+
+
+.event-card {
+    position: relative;
+}
+
+.edit-poll-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    color: #ffe500;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.edit-poll-btn:hover {
+    color: white;
+}
+
+.event-card h3 {
+    padding-right: 30px;
+}
+
+.delete-poll-btn {
+    position: absolute;
+    top: 18px;
+    right: 50px;
+    background: transparent;
+    border: none;
+    color: #ff5252;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.delete-poll-btn:hover {
+    color: #ff8888;
+}
+
+.question-card {
+    position: relative;
+}
+
+.question-card h2 {
+    padding-right: 75px;
+}
+
+.edit-question-btn,
+.delete-question-btn {
+    position: absolute;
+    top: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.edit-question-btn {
+    right: 55px;
+    color: #ffe500;
+}
+
+.delete-question-btn {
+    right: 20px;
+    color: #ff5252;
+}
+
+.edit-question-btn:hover {
+    color: white;
+}
+
+.delete-question-btn:hover {
+    color: #ff8888;
+}
