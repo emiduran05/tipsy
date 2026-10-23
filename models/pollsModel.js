@@ -51,6 +51,27 @@ deletePoll: async function(pollId, userId) {
 
     return result.rows[0];
 },
+
+getLeaderboard: async function(pollId) {
+    const result = await query(`
+        SELECT
+            u.id,
+            u.username,
+            SUM(qo.points) AS total_points
+        FROM users u
+        JOIN user_answers ua
+            ON u.id = ua.user_id
+        JOIN questions q
+            ON ua.question_id = q.id
+        JOIN question_options qo
+            ON ua.option_id = qo.id
+        WHERE q.poll_id = $1
+        GROUP BY u.id, u.username
+        ORDER BY total_points DESC
+    `, [pollId]);
+
+    return result.rows;
+},
 }
 
 module.exports = pollsModel;

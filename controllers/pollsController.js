@@ -14,13 +14,13 @@ const pollsController = {
                 error: "Internal Server error"
             })
         }
-        
-        
+
+
     },
 
-    getPollById: async function(req,res){
+    getPollById: async function (req, res) {
         try {
-            const {pollId} = req.params;
+            const { pollId } = req.params;
             const poll = await pollsModel.getPollById(pollId);
 
             res.status(200).json(poll);
@@ -63,82 +63,99 @@ const pollsController = {
     },
 
 
-    updatePollName: async function(req, res) {
-    try {
-        const token = req.signedCookies.authToken;
+    updatePollName: async function (req, res) {
+        try {
+            const token = req.signedCookies.authToken;
 
-        if (!token || !sessions[token]) {
-            return res.status(401).json({
-                error: "Unauthorized"
+            if (!token || !sessions[token]) {
+                return res.status(401).json({
+                    error: "Unauthorized"
+                });
+            }
+
+            const userId = sessions[token].id;
+            const { pollId } = req.params;
+            const { name } = req.body;
+
+            if (typeof name !== "string" || !name.trim() || name.trim().length > 100) {
+                return res.status(400).json({
+                    error: "Name must contain between 1 and 100 characters"
+                });
+            }
+
+            const poll = await pollsModel.updatePollName(
+                pollId,
+                userId,
+                name.trim()
+            );
+
+            if (!poll) {
+                return res.status(404).json({
+                    error: "Poll not found or you don't have permission"
+                });
+            }
+
+            return res.status(200).json(poll);
+
+        } catch (error) {
+            console.error(error);
+
+            return res.status(500).json({
+                error: "Internal Server error"
             });
         }
+    },
 
-        const userId = sessions[token].id;
-        const { pollId } = req.params;
-        const { name } = req.body;
+    deletePoll: async function (req, res) {
+        try {
+            const token = req.signedCookies.authToken;
 
-        if (typeof name !== "string" || !name.trim() || name.trim().length > 100) {
-            return res.status(400).json({
-                error: "Name must contain between 1 and 100 characters"
+            if (!token || !sessions[token]) {
+                return res.status(401).json({
+                    error: "Unauthorized"
+                });
+            }
+
+            const userId = sessions[token].id;
+            const { pollId } = req.params;
+
+            const poll = await pollsModel.deletePoll(pollId, userId);
+
+            if (!poll) {
+                return res.status(404).json({
+                    error: "Poll not found or you don't have permission"
+                });
+            }
+
+            return res.status(200).json({
+                message: "Poll deleted successfully"
+            });
+
+        } catch (error) {
+            console.error(error);
+
+            return res.status(500).json({
+                error: "Internal Server error"
             });
         }
+    },
 
-        const poll = await pollsModel.updatePollName(
-            pollId,
-            userId,
-            name.trim()
-        );
+    getLeaderboard: async function (req, res) {
+        try {
+            const { id } = req.params;
 
-        if (!poll) {
-            return res.status(404).json({
-                error: "Poll not found or you don't have permission"
+            const leaderboard = await pollsModel.getLeaderboard(id);
+
+            return res.status(200).json(leaderboard);
+
+        } catch (error) {
+            console.error(error);
+
+            return res.status(500).json({
+                error: "Error fetching leaderboard"
             });
         }
-
-        return res.status(200).json(poll);
-
-    } catch (error) {
-        console.error(error);
-
-        return res.status(500).json({
-            error: "Internal Server error"
-        });
-    }
-},
-
-deletePoll: async function(req, res) {
-    try {
-        const token = req.signedCookies.authToken;
-
-        if (!token || !sessions[token]) {
-            return res.status(401).json({
-                error: "Unauthorized"
-            });
-        }
-
-        const userId = sessions[token].id;
-        const { pollId } = req.params;
-
-        const poll = await pollsModel.deletePoll(pollId, userId);
-
-        if (!poll) {
-            return res.status(404).json({
-                error: "Poll not found or you don't have permission"
-            });
-        }
-
-        return res.status(200).json({
-            message: "Poll deleted successfully"
-        });
-
-    } catch (error) {
-        console.error(error);
-
-        return res.status(500).json({
-            error: "Internal Server error"
-        });
-    }
-},
+    },
 }
 
 module.exports = pollsController;
