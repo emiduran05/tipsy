@@ -3,9 +3,9 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const pagesRoutes = require("./routes/pagesRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
-const pollsRoutes = require("./routes/pollsRoutes");
+const pollsRoutes = require("./routes/pollsRoutes.js");
 const questionsRoutes = require("./routes/questionsRoutes.js");
-const answersRoutes = require("./routes/answersRoutes");
+const answersRoutes = require("./routes/answersRoutes.js");
 const { connectDB } = require("./db/db.js");
 
 const SECRET = process.env.SECRET;
