@@ -697,6 +697,34 @@ h1, h2 {
     margin-bottom: 18px;
 }
 
+.question-card {
+    position: relative;       
+}
+
+.delete-question {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    width: 28px;
+    height: 28px;
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #888;
+
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.delete-question:hover {
+    background: #c0392b;
+    color: white;
+}
+
 /* Options */
 .options {
     display: flex;

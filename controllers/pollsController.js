@@ -36,6 +36,11 @@ const pollsController = {
                 });
             }
 
+            const token = req.signedCookies.authToken;
+            const userId = token && sessions[token] ? sessions[token].id : null;
+
+            poll.is_creator = poll.creator_id === userId;
+
             res.status(200).json(poll);
 
         } catch (error) {
@@ -76,7 +81,7 @@ const pollsController = {
                 error: "Internal Server error"
             })
         }
-    }
+    },
 }
 
 module.exports = pollsController;

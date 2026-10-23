@@ -4,14 +4,10 @@ const answersModel = {
 
     getQuestionWithPoll: async function (questionId) {
         const result = await query(`
-        SELECT
-            q.id,
-            q.poll_id,
-            p.status AS poll_status,
-            p.deadline
-        FROM questions q
-        JOIN polls p ON q.poll_id = p.id
-        WHERE q.id = $1
+        SELECT questions.id, questions.poll_id, polls.creator_id, polls.status, polls.deadline
+        FROM questions
+        JOIN polls ON polls.id = questions.poll_id
+        WHERE questions.id = $1
     `, [questionId]);
 
         return result.rows[0];

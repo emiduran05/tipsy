@@ -17,8 +17,8 @@ const pollsModel = {
     },
 
     getPollById: async function (pollId) {
-        const result = await db.query(
-            "SELECT id, name, description, status, deadline FROM polls WHERE id = $1",
+        const result = await query(
+            "SELECT id, name, status, deadline, creator_id FROM polls WHERE id = $1",
             [pollId]
         );
         return result.rows[0];

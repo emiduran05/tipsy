@@ -4,7 +4,7 @@ const sessions = require("../config/sessions");
 
 const answersController = {
 
-    postAnswer: async function(req, res) {
+    postAnswer: async function (req, res) {
         try {
             const token = req.signedCookies.authToken;
 
@@ -32,6 +32,12 @@ const answersController = {
             if (!question) {
                 return res.status(404).json({
                     error: "Question not found"
+                });
+            }
+            
+            if (question.creator_id === userId) {
+                return res.status(403).json({
+                    error: "You can't vote on your own question"
                 });
             }
 

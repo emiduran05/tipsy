@@ -38,4 +38,6 @@ router.get("/polls/:id/leaderboard", async (req, res) => { //solo de prueba
     }
 });
 
+router.delete("/questions/:questionId", questionsController.deleteQuestion);
+
 module.exports = router;
