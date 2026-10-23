@@ -1,6 +1,4 @@
-//login fethc
-async function fetchLogin(username, password) {
-
+async function fetchLogin(email, password) {
     try {
         const res = await fetch("/login", {
             method: "POST",
@@ -8,7 +6,7 @@ async function fetchLogin(username, password) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username: username,
+                username: email,
                 password: password
             })
         });
@@ -16,42 +14,54 @@ async function fetchLogin(username, password) {
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(data.status);
+            alert(data.error || "Login failed");
+            return false;
         }
 
-        window.location.href = "/user-page";
+        return true;
 
-    } catch (err) {
-        console.error(err);
-        alert(err.message);
+    } catch (error) {
+        console.error(error);
+        alert("Server not reachable");
+        return false;
     }
-
 }
 
 
-//register fetch
 async function fetchRegister(name, lastname, username, email, password) {
-    await fetch("/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: name,
-            lastname: lastname,
-            username: username,
-            email: email,
-            password: password
-        })
-    })
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(error => console.error(error))
+    try {
+        const res = await fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                lastname: lastname,
+                username: username,
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error || "Registration failed");
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error(error);
+        alert("Server not reachable");
+        return false;
+    }
 }
 
 
 document.addEventListener("DOMContentLoaded", () => {
-
 
     const loginForm = document.getElementById("login_form");
 
@@ -62,7 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const username = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            await fetchLogin(username, password);
+            const loggedIn = await fetchLogin(username, password);
+
+            if (loggedIn) {
+                window.location.href = "/user-page";
+            }
         });
     }
 
@@ -79,8 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            await fetchRegister(name, lastname, username, email, password);
-            window.location.replace("/login");
+            const registered = await fetchRegister(name, lastname, username, email, password);
+
+            if (!registered) return;
+
+            const loggedIn = await fetchLogin(email, password);
+
+            if (loggedIn) {
+                window.location.href = "/user-page";
+            }
         });
     }
 

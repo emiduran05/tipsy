@@ -27,11 +27,35 @@ const questionsModel = {
 
     },
 
-
+    getQuestionById: async function (questionId) {
+        const result = await query(
+            `SELECT questions.id, questions.poll_id, questions.name, polls.creator_id
+         FROM questions
+         JOIN polls ON polls.id = questions.poll_id
+         WHERE questions.id = $1`,
+            [questionId]
+        );
+        return result.rows[0];
+    },
 
     updateQuestion: async function (questionId, userId, name) {
         const result = await query("UPDATE questions q SET name = $1 FROM polls p WHERE q.poll_id = p.id AND q.id = $2 AND p.creator_id = $3 RETURNING q.*", [name, questionId, userId]);
 
+        return result.rows[0];
+    },
+
+    deleteQuestion2: async function (questionId) {
+        const result = await query(
+            `WITH deleted_answers AS (
+             DELETE FROM user_answers WHERE question_id = $1
+         ),
+         deleted_options AS (
+             DELETE FROM question_options WHERE question_id = $1
+         )
+         DELETE FROM questions WHERE id = $1
+         RETURNING *`,
+            [questionId]
+        );
         return result.rows[0];
     },
 
@@ -40,7 +64,6 @@ const questionsModel = {
 
         return result.rows[0];
     },
-
 }
 
 module.exports = questionsModel;

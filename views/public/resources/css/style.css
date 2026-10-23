@@ -678,6 +678,52 @@ h1, h2 {
 }
 
 /* Questions */
+
+/* Question Header */
+
+header:has(.profile-link) {
+    position: relative;       
+}
+
+header:has(.profile-link) h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.profile-link {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); 
+    display: flex;
+}
+
+.profile-avatar {
+    width: 44px;
+    height: 44px;
+    background-color: var(--yellow);
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .profile-link {
+        right: 30px;
+    }
+
+    .profile-avatar {
+        width: 54px;
+        height: 54px;
+    }
+
+     header:has(.profile-link) h1 {
+        font-size: 38px;
+    }
+}
 .questions {
     padding: 15px 16px 40px;
     display: flex;
@@ -695,6 +741,34 @@ h1, h2 {
     font-size: 22px;
     line-height: 1.5;
     margin-bottom: 18px;
+}
+
+.question-card {
+    position: relative;       
+}
+
+.delete-question {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    width: 28px;
+    height: 28px;
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #888;
+
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.delete-question:hover {
+    background: #c0392b;
+    color: white;
 }
 
 /* Options */

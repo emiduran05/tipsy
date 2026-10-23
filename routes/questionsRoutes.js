@@ -14,4 +14,6 @@ router.delete("/questions/:questionId", questionsController.deleteQuestion);
 
 
 
+router.delete("/questions/:questionId", questionsController.deleteQuestion);
+
 module.exports = router;

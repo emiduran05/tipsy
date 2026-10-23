@@ -16,17 +16,34 @@ const pollsController = {
         }
 
 
+
+
     },
 
+    getPollById: async function (req, res) {
     getPollById: async function (req, res) {
         try {
             const { pollId } = req.params;
             const poll = await pollsModel.getPollById(pollId);
 
+            if (!poll) {
+                return res.status(404).json({
+                    error: "Poll not found"
+                });
+            }
+
+            const token = req.signedCookies.authToken;
+            const userId = token && sessions[token] ? sessions[token].id : null;
+
+            poll.is_creator = poll.creator_id === userId;
+
             res.status(200).json(poll);
+
         } catch (error) {
-            res.status(500).json("Internal server error")
-            console.log(error)
+            console.error(error);
+            res.status(500).json({
+                error: "Internal Server error"
+            });
         }
     },
 

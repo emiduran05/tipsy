@@ -4,7 +4,7 @@ const sessions = require("../config/sessions");
 
 const answersController = {
 
-    postAnswer: async function(req, res) {
+    postAnswer: async function (req, res) {
         try {
             const token = req.signedCookies.authToken;
 
@@ -29,18 +29,32 @@ const answersController = {
 
             const question = await answersModel.getQuestionWithPoll(questionId);
 
+            console.log("---- postAnswer debug ----");
+            console.log("questionId:", questionId, "| optionId:", optionId, "| userId:", userId);
+            console.log("question from DB:", JSON.stringify(question));
+            console.log("status check:", JSON.stringify(question?.status), "=== 'open' ?", question?.status === "open");
+            console.log("deadline:", question?.deadline, "| now:", new Date());
+
             if (!question) {
                 return res.status(404).json({
                     error: "Question not found"
                 });
             }
 
+            if (question.creator_id === userId) {
+                return res.status(403).json({
+                    error: "You can't vote on your own question"
+                });
+            }
+
             // Validate poll status
-            if (question.poll_status !== "open") {
+            /*
+            if (question.status !== "open") {
                 return res.status(403).json({
                     error: "This poll is closed"
                 });
             }
+            */
 
             // Validate deadline
             const deadlinePassed =

@@ -4,6 +4,9 @@ const pollId = new URLSearchParams(window.location.search).get("pollId");
 const tabs = document.querySelectorAll(".poll-tab");
 const contents = document.querySelectorAll(".poll-tab-content");
 
+let isCreator = false;
+let pollStatus = "open";     
+
 tabs.forEach(tab => {
 
     tab.addEventListener("click", () => {
@@ -45,6 +48,8 @@ async function fetchUQuestions(pollId) {
 }
 
 function displayQuestions(questions) {
+
+    console.log("isCreator:", isCreator, "questions:", questions.length);
 
     const container = document.getElementById("questions-container");
 
@@ -95,7 +100,7 @@ function displayQuestions(questions) {
         footer.className = "question-footer";
 
         const status = document.createElement("span");
-        status.textContent = "Status: OPEN";
+        status.textContent = `Status: ${pollStatus.toUpperCase()}`;
 
 
         footer.appendChild(status);
@@ -125,14 +130,39 @@ function displayQuestions(questions) {
 
         });
 
-
         card.appendChild(title);
         card.appendChild(optionsContainer);
         card.appendChild(footer);
 
+        if (isCreator) {
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "×";                            
+            deleteButton.className = "delete-question";
+            deleteButton.setAttribute("aria-label", "Delete question");  
+            deleteButton.title = "Delete question";                    
+
+            deleteButton.addEventListener("click", async () => {
+                if (!confirm("Delete this question and all its answers?")) return;
+                await fetchDeleteQuestion(question.id);
+                fetchUQuestions(pollId);
+                fetchAnsweredQuestions(pollId);
+            });
+
+            card.appendChild(deleteButton);  
+        }
+
+        // Add card to HTML
         container.appendChild(card);
     });
 }
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await fetchPolls(pollId);
+    fetchUQuestions(pollId);
+    fetchAnsweredQuestions(pollId);
+    fetchLeaderboard(pollId);
+});
 
 
 
@@ -233,16 +263,6 @@ function displayLeaderboard(users) {
         container.appendChild(row);
     });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    fetchPolls(pollId);
-    fetchUQuestions(pollId);
-    fetchAnsweredQuestions(pollId);
-    fetchLeaderboard(pollId);
-
-});
-
 
 //Create question
 
@@ -363,6 +383,9 @@ function displayPolls(poll) {
     const description = container.querySelector(".poll-details p");
     const date = container.querySelector(".poll-meta span");
 
+    isCreator = poll.is_creator;
+    pollStatus = poll.status;
+    console.log("Poll Status:"+ `Status: ${pollStatus.toUpperCase()}`);
     title.textContent = poll.name;
 
     if (poll.deadline) {
@@ -405,5 +428,22 @@ async function fetchPostAnswer(questionId, optionId) {
         console.error(error);
         alert(error.message);
         return null;
+    }
+}
+
+async function fetchDeleteQuestion(questionId) {
+    try {
+        const res = await fetch(`/questions/${questionId}`, {
+            method: "DELETE"
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error);
+        }
+
+    } catch (error) {
+        console.error(error);
     }
 }
