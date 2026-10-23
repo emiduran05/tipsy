@@ -5,6 +5,7 @@ const questionOptionsModel = require("../models/questionOptionsModel");
 const questionsController = {
 
     getUnansweredQuestions: async function (req, res) {
+
         try {
             const { pollId } = req.params;
 

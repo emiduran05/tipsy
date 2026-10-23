@@ -5,6 +5,7 @@ const tabs = document.querySelectorAll(".poll-tab");
 const contents = document.querySelectorAll(".poll-tab-content");
 
 let isCreator = false;
+let pollStatus = "open";     
 
 tabs.forEach(tab => {
 
@@ -104,7 +105,7 @@ function displayQuestions(questions) {
         footer.className = "question-footer";
 
         const status = document.createElement("span");
-        status.textContent = "Status: OPEN";
+        status.textContent = `Status: ${pollStatus.toUpperCase()}`;
 
 
         footer.appendChild(status);
@@ -388,7 +389,8 @@ function displayPolls(poll) {
     const date = container.querySelector(".poll-meta span");
 
     isCreator = poll.is_creator;
-
+    pollStatus = poll.status;
+    console.log("Poll Status:"+ `Status: ${pollStatus.toUpperCase()}`);
     title.textContent = poll.name;
 
     if (poll.deadline) {
