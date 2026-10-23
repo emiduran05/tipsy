@@ -16,6 +16,12 @@ const pollsModel = {
         return result.rows;
     },
 
+    getPollById: async function (pollId){
+        const result = await query("SELECT * FROM polls WHERE id = $1", [pollId]);
+
+        return result.rows[0];
+    },
+
     createPoll: async function (creatorId, name, deadline, description) {
         const result = await query(
         "INSERT INTO polls (creator_id, name, deadline, description) VALUES ($1, $2, $3, $4) RETURNING *",

@@ -52,19 +52,27 @@ function displayQuestions(questions) {
 
     questions.forEach(question => {
 
+        // Create question card
         const card = document.createElement("article");
         card.className = "question-card";
 
+        // Question title
         const title = document.createElement("h2");
         title.textContent = question.name;
 
+        // Options container
         const optionsContainer = document.createElement("div");
         optionsContainer.className = "options";
 
+        let questionId = "";
+        let questionAnswerId = "";
+
+        // Create each option
         question.options.forEach(option => {
 
             const button = document.createElement("button");
             
+
             button.textContent = option.label;
 
             button.addEventListener("click", () => {
@@ -83,21 +91,36 @@ function displayQuestions(questions) {
             optionsContainer.appendChild(button);
         });
 
+        const sendButton = document.createElement("button");
+        sendButton.classList.add("send-option-btn")
+        sendButton.textContent = "Send"
 
+        // Question footer
         const footer = document.createElement("div");
         footer.className = "question-footer";
 
         const status = document.createElement("span");
         status.textContent = "Status: OPEN";
 
+        
+        footer.appendChild(status);
+        footer.appendChild(sendButton)
 
+        sendButton.addEventListener("click", () => {
+            console.log(questionId, questionAnswerId)
+        })
+
+        // Add everything to card
         card.appendChild(title);
         card.appendChild(optionsContainer);
         card.appendChild(footer);
 
+        // Add card to HTML
         container.appendChild(card);
     });
 }
+
+
 
 async function fetchAnsweredQuestions(pollId) {
     try {
@@ -152,6 +175,8 @@ function displayAnsweredQuestions(questions) {
     });
 }
 
+
+
 async function fetchLeaderboard(pollId) {
     try {
         const res = await fetch(`/polls/${pollId}/leaderboard`);
@@ -197,6 +222,7 @@ function displayLeaderboard(users) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    fetchPolls(pollId);
     fetchUQuestions(pollId);
     fetchAnsweredQuestions(pollId);
     fetchLeaderboard(pollId);
@@ -292,5 +318,49 @@ async function fetchPostQuestion(pollId, question) {
 
     } catch (error) {
         console.error(error);
+    }
+}
+
+
+/*poll data*/
+
+async function fetchPolls(pollId) {
+    try {
+        const res = await fetch(`/polls/${pollId}`);
+
+        if (!res.ok) {
+            throw new Error("Error fetching poll");
+        }
+
+        const poll = await res.json();
+
+        displayPolls(poll);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function displayPolls(poll) {
+
+    const container = document.querySelector(".poll-info");
+
+    const title = container.querySelector(".poll-details h2");
+    const description = container.querySelector(".poll-details p");
+    const date = container.querySelector(".poll-meta span");
+
+    title.textContent = poll.name;
+
+    if (poll.deadline) {
+        const deadline = new Date(poll.deadline);
+
+        date.textContent = deadline.toLocaleDateString("en-GB", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        });
+    } else {
+        date.textContent = "No date";
     }
 }

@@ -18,6 +18,18 @@ const pollsController = {
         
     },
 
+    getPollById: async function(req,res){
+        try {
+            const {pollId} = req.params;
+            const poll = await pollsModel.getPollById(pollId);
+
+            res.status(200).json(poll);
+        } catch (error) {
+            res.status(500).json("Internal server error")
+            console.log(error)
+        }
+    },
+
     createPoll: async function (req, res) {
         try {
 
