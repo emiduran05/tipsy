@@ -5,12 +5,12 @@ const pagesRoutes = require("./routes/pagesRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
 const pollsRoutes = require("./routes/pollsRoutes");
 const questionsRoutes = require("./routes/questionsRoutes.js");
+const answersRoutes = require("./routes/answersRoutes");
 const { connectDB } = require("./db/db.js");
 
 const SECRET = process.env.SECRET;
 const app = express();
 const PORT = process.env.PORT;
-
 
 app.use(cookieParser(SECRET));
 app.use(express.json());
@@ -19,6 +19,7 @@ app.use(pagesRoutes);
 app.use(userRoutes);
 app.use(questionsRoutes);
 app.use(pollsRoutes);
+app.use(answersRoutes);
 
 
 connectDB()

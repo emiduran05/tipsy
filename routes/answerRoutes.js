@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const answerController = require("../controllers/answerController.js");
+const answersController = require("../controllers/answersController");
 
-router.get("/", answerController.getVoters);
-router.get("/", answerController.getMyAnswer);
-router.post("/", answerController.submitAnswer);
+router.post("/questions/:questionId/answers", answersController.postAnswer);
 
 module.exports = router;
