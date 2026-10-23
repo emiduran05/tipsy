@@ -71,7 +71,7 @@ function displayQuestions(questions) {
         question.options.forEach(option => {
 
             const button = document.createElement("button");
-            
+
 
             button.textContent = option.label;
 
@@ -84,7 +84,7 @@ function displayQuestions(questions) {
                 questionAnswerId = option.id;
 
 
-                
+
             });
 
 
@@ -102,13 +102,34 @@ function displayQuestions(questions) {
         const status = document.createElement("span");
         status.textContent = "Status: OPEN";
 
-        
+
         footer.appendChild(status);
         footer.appendChild(sendButton)
 
-        sendButton.addEventListener("click", () => {
-            console.log(questionId, questionAnswerId)
-        })
+
+        sendButton.addEventListener("click", async () => {
+
+            if (!questionAnswerId) {
+                alert("Please select an option");
+                return;
+            }
+
+            sendButton.disabled = true;
+
+            const answer = await fetchPostAnswer(questionId, questionAnswerId);
+
+            if (answer) {
+                await Promise.all([
+                    fetchUQuestions(pollId),
+                    fetchAnsweredQuestions(pollId),
+                    fetchLeaderboard(pollId)
+                ]);
+            } else {
+                sendButton.disabled = false;
+            }
+
+        });
+
 
         // Add everything to card
         card.appendChild(title);
@@ -264,7 +285,7 @@ addButton.addEventListener("click", () => {
 
 const form = document.getElementById("createQuestion");
 
-form.addEventListener("submit", async(e) => {
+form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const name = document.getElementById("question").value;
@@ -362,5 +383,34 @@ function displayPolls(poll) {
         });
     } else {
         date.textContent = "No date";
+    }
+}
+
+
+
+async function fetchPostAnswer(questionId, optionId) {
+    try {
+        const res = await fetch(`/questions/${questionId}/answers`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                option_id: optionId
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || "Error submitting answer");
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
+        return null;
     }
 }

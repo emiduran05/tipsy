@@ -1,3 +1,22 @@
+async function fetchCurrentUser() {
+    try {
+        const res = await fetch("/users/me");
+
+        if (!res.ok) {
+            throw new Error("Error fetching user");
+        }
+
+        const user = await res.json();
+
+        document.querySelector(".user-welcome").textContent = `Hey, ${user.username}`
+        return user;
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 async function fetchPolls() {
     try {
         const res = await fetch("/polls");
@@ -106,6 +125,7 @@ async function createPoll(event) {
 // Execute when page loads
 document.addEventListener("DOMContentLoaded", () => {
 
+    fetchCurrentUser();
     fetchPolls();
 
     document.getElementById("create-event-form")
